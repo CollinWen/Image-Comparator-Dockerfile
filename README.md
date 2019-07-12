@@ -18,7 +18,17 @@ The docker image will open port 5984 for couchdb access and port 8080 for web se
 
 ## Configuring Couchdb and adding Images ##
 
-Note: the couchdb username and password are set to 'admin' and 'password' by default
+To install couchdb, run the following:
+```
+echo "deb https://apache.bintray.com/couchdb-deb bionic main" \ | tee -a /etc/apt/sources.list
+curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc \ | apt-key add -
+sudo apt-get update && apt-get install couchdb
+```
+
+Use the following configurations:
+* 1: single node
+* 0.0.0.0 bind address
+* (password)
 
 To ensure that the database is accessible locally, check the following locations to make sure that all instances of bind_address are set to '0.0.0.0' (127.0.0.1 means that the database is only accessible on the host machine)
 * /opt/couchdb/etc/local.ini
@@ -47,9 +57,22 @@ Once you've confirmed the bind_address and CORS are configured properly, you mus
 service couchdb restart
 ```
 
+To finish configuring a single node setup, run the following;
+```
+curl -X PUT http://admin:<password>@localhost:5984/_users
+curl -X PUT http://admin:<password>@localhost:5984/_replicator
+```
+
+To create and setup the database, run the following (use the db_name you used from the docker build command):
+```
+curl -X PUT http://admin:<password>@localhost:5984/<db_name>
+cd /Image-Comparator/dbutil
+curl -X PUT http://admin:<password>@localhost:5984/<db_name>/_design/basic_views -d @basic_views.json
+```
+
 -insert data
 
-A useful tool to manage your couchdb database is to user project fauxton. If you've set everything up correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
+Your database is all set to go! A useful tool to manage your couchdb database is to user project fauxton. If you've set everything up correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
 You can filter the documents in the database by going to the basic_views tab. There, you can filter specific documents and sort the documents cleanly.
 
 ## Starting the server ##

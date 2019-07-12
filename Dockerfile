@@ -22,31 +22,33 @@ RUN apt-get install -y apache2
 RUN cd /
 RUN git clone https://github.com/CollinWen/Image-Comparator.git
 
+# replace all instances of "rop_images" and "172.16.42.15" with new database name and new ip address
+RUN cd /Image-Comparator/
+RUN grep -rl "rop_images" /Image-Comparator/* | xargs sed -i 's/rop_images/$db_name/g'
+RUN grep -rl "172.16.42.15" /Image-Comaparator/* | xargs sed -i 's/rop_images/$host_local_ip/g'
 
 # install couchdb
-RUN echo "deb http://apache.bintray.com/couchdb-deb bionic main" \ | tee -a /etc/apt/sources.list
-RUN curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc \ | apt-key add -
-RUN apt-get update && apt-get install -y couchdb
+# RUN export DEBIAN_FRONTEND=noninteractive
+# RUN echo "deb http://apache.bintray.com/couchdb-deb bionic main" \ | tee -a /etc/apt/sources.list
+# RUN curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc \ | apt-key add -
+# RUN apt-get update && apt-get install -yq couchdb
 
 # configure couchdb
-# RUN 1
-# RUN 0.0.0.0
-# RUN password
-# RUN password
+# 1
+# 0.0.0.0
+# password
+# password
 
 # start couchdb
-RUN service couchdb start
-RUN curl -X PUT http://admin:password@127.0.0.1:5984/_users
-RUN curl -X PUT http://admin:password@127.0.0.1:5984/_replicator
-
-#TODO replace all instances of "rop_images" with $db_name
-#TODO replace all instances of "172.16.42.15" with $host_local_ip
+# RUN service couchdb start
+# RUN curl -X PUT http://admin:password@127.0.0.1:5984/_users
+# RUN curl -X PUT http://admin:password@127.0.0.1:5984/_replicator
 
 # Create database, add documents
-RUN curl -X PUT http://admin:password@localhost:5984/$db_name
-RUN cd Image-Comparator/dbutil
-RUN curl -X PUT http://admin:password@localhost:5984/$db_name/_design/basic_views -d @basic_views.json
+# RUN curl -X PUT http://admin:password@localhost:5984/$db_name
+# RUN cd Image-Comparator/dbutil
+# RUN curl -X PUT http://admin:password@localhost:5984/$db_name/_design/basic_views -d @basic_views.json
 
-#TODO how to add custom image set
+# TODO how to add custom image set
 
 CMD ["echo","Image created"]

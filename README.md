@@ -1,6 +1,6 @@
 ## Setting up Image-Comparator in a Docker container ##
 
-All code from the image-comparator can be found here: https://github.com/CollinWen/Image-Comparator
+All code for the Image-Comparator can be found here: https://github.com/CollinWen/Image-Comparator
 
 The dockerfile will automatically create a docker image for the Image-Comaparator and set up a database. A docker image can be run as a virtual linux system, which will be used to deploy the web server. Once the docker image is built and run, the admin can insert custom image datasets and create image classify/compare tasks.
 
@@ -49,7 +49,7 @@ service couchdb restart
 
 -insert data
 
-A useful tool to manage your couchdb database is to user project fauxton. If you've set up everything correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
+A useful tool to manage your couchdb database is to user project fauxton. If you've set everything up correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
 You can filter the documents in the database by going to the basic_views tab. There, you can filter specific documents and sort the documents cleanly.
 
 ## Starting the server ##

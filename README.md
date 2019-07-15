@@ -8,7 +8,7 @@ First, navigate to the Dockefile and replace <db_name> and <host_local_ip> with 
 
 To build the docker images, run the following command:
 ```
-docker build . -t <name>:<tag> --build-arg db_name="<database name>" --build-arg host_local_ip="<host local ip>"
+docker build . -t <name>:<tag>
 ```
 
 Once the image is build, you can run the docker image by the following command (note: to make the database and web server accessible locally, we must forward the port from the virtual machine to the actual system, which will allow all users in the network to access the ports):
@@ -24,7 +24,7 @@ To install couchdb, run the following:
 ```
 echo "deb https://apache.bintray.com/couchdb-deb bionic main" \ | tee -a /etc/apt/sources.list
 curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc \ | apt-key add -
-sudo apt-get update && apt-get install couchdb
+apt-get update && apt-get install couchdb
 ```
 
 Use the following configurations:

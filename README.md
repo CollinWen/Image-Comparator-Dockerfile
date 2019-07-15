@@ -4,7 +4,9 @@ All code for the Image-Comparator can be found here: https://github.com/CollinWe
 
 The dockerfile will automatically create a docker image for the Image-Comaparator and set up a database. A docker image can be run as a virtual linux system, which will be used to deploy the web server. Once the docker image is built and run, the admin can insert custom image datasets and create image classify/compare tasks.
 
-To build a docker container, navigate to the dockerfile directory, and run the following command:
+First, navigate to the Dockefile and replace <db_name> and <host_local_ip> with the preferred database name and the local ip of the host machine. **This is important as it will replace all occurences of 'rop_images' and '174.16.42.15' with your entered arguments. The server will not function properly if you skip this step. **
+
+To build the docker images, run the following command:
 ```
 docker build . -t <name>:<tag> --build-arg db_name="<database name>" --build-arg host_local_ip="<host local ip>"
 ```

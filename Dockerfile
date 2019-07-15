@@ -3,8 +3,8 @@ FROM ubuntu
 MAINTAINER Collin Wen <collinwen@gmail.com>
 
 # arguments
-ARG db_name="rop_images"
-ARG host_local_ip="172.16.42.15"
+# ARG db_name="rop_images"
+# ARG host_local_ip="172.16.42.15"
 
 # install required packages
 RUN apt-get update
@@ -24,10 +24,8 @@ RUN git clone https://github.com/CollinWen/Image-Comparator.git
 
 # replace all instances of "rop_images" and "172.16.42.15" with new database name and new ip address
 RUN cd /Image-Comparator/
-ENV sed_db = "'s/rop_images/"${db_name}"/g'" 
-ENV sed_ip = "'s/172.16.42.15/"${host_local_ip}"/g'"
-RUN grep -rl "rop_images" /Image-Comparator/* | xargs sed -i $sed_db
-RUN grep -rl "172.16.42.15" /Image-Comparator/* | xargs sed -i $sed_ip 
+RUN grep -rl "rop_images" /Image-Comparator/* | xargs sed -i 's/rop_images/<db_name>/g'
+RUN grep -rl "172.16.42.15" /Image-Comparator/* | xargs sed -i 's/172.16.42.15/<host_local_ip>/g'
 
 # install couchdb
 # RUN export DEBIAN_FRONTEND=noninteractive
@@ -50,7 +48,5 @@ RUN grep -rl "172.16.42.15" /Image-Comparator/* | xargs sed -i $sed_ip
 # RUN curl -X PUT http://admin:password@localhost:5984/$db_name
 # RUN cd Image-Comparator/dbutil
 # RUN curl -X PUT http://admin:password@localhost:5984/$db_name/_design/basic_views -d @basic_views.json
-
-# TODO how to add custom image set
 
 CMD ["echo","Image created"]

@@ -75,11 +75,11 @@ cd /Image-Comparator/dbutil
 curl -X PUT http://admin:<password>@localhost:5984/<db_name>/_design/basic_views -d @basic_views.json
 ```
 
-The ruby scripts in the dbutils folder are usefull for adding data to a dataset. While the regular addImagesToDb_jkc.rb script will put in all the images in a given directory, the addOCTImagesToDb.rb script will take in OCT images in the format of a series of directories. Within each directory (which is an OCT scan), all the image layers of the scan will be added as attachments to the database.
+The ruby scripts in the dbutils folder are usefull for adding data to a dataset. While the regular [addImagesToDb_jkc.rb](https://github.com/CollinWen/Image-Comparator/blob/master/dbutil/addImagesToDb_jkc.rb) script will put in all the images in a given directory, the [addOCTImagesToDb.rb](https://github.com/CollinWen/Image-Comparator/blob/master/dbutil/addOCTImagesToDb.rb) script will take in OCT images in the format of a series of directories. Within each directory (which is an OCT scan), all the image layers of the scan will be added as attachments to the database.
 
-Once all the image documents are inserted into the database, the makeImageCompareList.rb script can be run to create a list of images to compare (Note: image compare lists are either for standard retinal images or oct scans). 
+Once all the image documents are inserted into the database, the [makeImageCompareList.rb](https://github.com/CollinWen/Image-Comparator/blob/master/dbutil/makeImageCompareList.rb) script can be run to create a list of images to compare (Note: image compare lists are either for standard retinal images or oct scans). 
 
-Once there are image compare lists in the database, the makeTask.rb script can create compare tasks for different users. Once users are given tasks, they can view the images on the website.
+Once there are image compare lists in the database, the [makeTask.rb](https://github.com/CollinWen/Image-Comparator/blob/master/dbutil/makeTask.rb) script can create compare tasks for different users. Once users are given tasks, they can view the images on the website.
 
 Your database is all set to go! A useful tool to manage your couchdb database is to user project fauxton. If you've set everything up correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
 You can filter the documents in the database by going to the basic_views tab. There, you can filter specific documents and sort the documents cleanly.

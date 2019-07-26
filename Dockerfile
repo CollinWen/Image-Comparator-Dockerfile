@@ -24,8 +24,9 @@ RUN git clone https://github.com/CollinWen/Image-Comparator.git
 
 # replace all instances of "rop_images" and "172.16.42.15" with new database name and new ip address
 RUN cd /Image-Comparator/
-RUN grep -rl "rop_images" /Image-Comparator/* | xargs sed -i 's/rop_images/<db_name>/g'
-RUN grep -rl "172.16.42.15" /Image-Comparator/* | xargs sed -i 's/172.16.42.15/<host_local_ip>/g'
+RUN grep -rl "rop_images" /Image-Comparator/* | xargs sed -i 's/ret_images/<db_name>/g'
+RUN grep -rl "172.16.42.15" /Image-Comparator/* | xargs sed -i 's/ec2-18-220-36-255.us-east-2.compute.amazonaws.com/<host_local_ip>/g'
+RUN grep -rl "5984" /Image-Comparator/* | xargs sed -i 's/5984/<database_port>/g'
 
 # install couchdb
 # RUN export DEBIAN_FRONTEND=noninteractive

@@ -11,12 +11,15 @@ To build the docker images, run the following command:
 docker build . -t <name>:<tag>
 ```
 
-Once the image is build, you can run the docker image by the following command (note: to make the database and web server accessible locally, we must forward the port from the virtual machine to the actual system, which will allow all users in the network to access the ports):
+Once the image is build, you can run the docker image by the following command (note: to make the database and web server accessible locally, we must forward the port from the virtual machine to the actual system, which will allow all users in the network to access the ports). By default, couchdb runs on port 5984 and the web server on port 8080:
 ```
 docker run -p 5984:5984 -p 8080:8080 -it -v /data:/data cwen /bin/bash
 ```
 
-The docker image will open port 5984 for couchdb access and port 8080 for web server access.
+Optionally, to run the database and server on custom ports, use the following format:
+```
+docker run -p <custom db port>:5984 -p <custom webserver port>:8080 -it -v /data:/data cwen /bin/bash
+```
 
 ## Configuring Couchdb and adding Images ##
 
@@ -72,7 +75,11 @@ cd /Image-Comparator/dbutil
 curl -X PUT http://admin:<password>@localhost:5984/<db_name>/_design/basic_views -d @basic_views.json
 ```
 
--insert data
+The ruby scripts in the dbutils folder are usefull for adding data to a dataset. While the regular addImagesToDb_jkc.rb script will put in all the images in a given directory, the addOCTImagesToDb.rb script will take in OCT images in the format of a series of directories. Within each directory (which is an OCT scan), all the image layers of the scan will be added as attachments to the database.
+
+Once all the image documents are inserted into the database, the makeImageCompareList.rb script can be run to create a list of images to compare (Note: image compare lists are either for standard retinal images or oct scans). 
+
+Once there are image compare lists in the database, the makeTask.rb script can create compare tasks for different users. Once users are given tasks, they can view the images on the website.
 
 Your database is all set to go! A useful tool to manage your couchdb database is to user project fauxton. If you've set everything up correctly, you should be able to view your database with the URL http://<host_local_ip>:5984/_utils
 You can filter the documents in the database by going to the basic_views tab. There, you can filter specific documents and sort the documents cleanly.
@@ -84,5 +91,5 @@ To start the web server, run the following command:
 python -m SimpleHTTPServer 8080
 ```
 
-Now you should be able to access the web server from any local machine with the URL http://<host_local_ip>:8080
+Now you should be able to access the web server from any local (or public) machine with the URL http://<host_local_ip>:<webserver port>
 
